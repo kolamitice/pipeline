@@ -1,79 +1,118 @@
+# Waveform approximant used for parameter estimation; 
+# "IMRPhenomPv2" is a commonly used phenomenological model for compact binary coalescence.
 waveform_approximant_estimation: "IMRPhenomPv2"
-waveform_approximant_injection: "IMRPhenomPv2"
-reference_frequency: 10.0
-max_reference_frequency: 60.0
-reference_frequency_steps: 5.0
-minimum_frequency: 10.0
-maximum_frequency: 100.0
-sampling_frequency: 4096
-geocent_time: 1126259642.413
-duration: 4
-num_events: 2
-priors_lower_bound: 0.8 # means lower bound of uniform prior distribution is the respective injection value time priors_lower_bound
-priors_upper_bound: 1.2 # means lower bound of uniform prior distribution is the respective injection value time priors_lower_bound
-detector_setup: ["H1", "L1"]
-npoints: 500
-population_file: "population.json"
-results_dir: "results"
-bias_output_file: "biases.csv"
-population_paramters:
 
-# paramters. estimate either true or false dependent on you wish to estimate this parameter. min max is for the population generation
-# if you want to fix a parameter in the population generation simply set min max equal (this has not necessarily something to do with the priors)
+# Waveform approximant used for signal injection; 
+# typically the same as the estimation model for consistency.
+waveform_approximant_injection: "IMRPhenomPv2"
+
+# Reference frequency at which certain parameters (like spins) are defined, in Hz.
+reference_frequency: 10.0
+
+# Maximum reference frequency to be used during parameter estimation, in Hz.
+max_reference_frequency: 60.0
+
+# Step size for incrementing the reference frequency during parameter estimation, in Hz.
+reference_frequency_steps: 5.0
+
+# Minimum frequency for the waveform generation, in Hz.
+minimum_frequency: 10.0
+
+# Maximum frequency for the waveform generation, in Hz.
+maximum_frequency: 100.0
+
+# Sampling frequency for the data, in Hz; higher values result in finer resolution.
+sampling_frequency: 4096
+
+# Geocentric time of the coalescence in GPS seconds.
+geocent_time: 1126259642.413
+
+# Duration of the waveform in seconds.
+duration: 4
+
+# Number of events (i.e., gravitational wave signals) to generate in the population.
+num_events: 80
+
+# Lower bound multiplier for the uniform prior distribution; e.g., if the injection value is 100 and priors_lower_bound is 0.8,
+# the lower bound for the prior will be 80.
+priors_lower_bound: 0.8
+
+# Upper bound multiplier for the uniform prior distribution; e.g., if the injection value is 100 and priors_upper_bound is 1.2,
+# the upper bound for the prior will be 120.
+priors_upper_bound: 1.2
+
+# List of detectors used in the parameter estimation (e.g., H1 for LIGO Hanford, L1 for LIGO Livingston).
+detector_setup: ["H1", "L1"]
+
+# Number of live points for the Bayesian sampler; higher values generally lead to better results but require more computation.
+npoints: 500
+
+# Filename for the JSON file where the generated population of parameters will be saved.
+population_file: "population.json"
+
+# Directory where the results (e.g., parameter estimation results, plots) will be saved.
+results_dir: "results"
+
+# Filename for the CSV file where the calculated biases will be saved.
+bias_output_file: "biases.csv"
+
+# Configuration for population generation parameters.
+# Specifies whether to estimate each parameter (True or False) and the min/max range for generation.
+# If min and max are equal, the parameter is fixed during population generation.
 parameters:
-  mass_1:
-    estimate: true
-    min: 100
-    max: 200
-  mass_2:
+  mass_1:  # Mass of the primary black hole in the binary system.
+    estimate: true  # Whether to estimate this parameter during parameter estimation.
+    min: 100  # Minimum value for this parameter during population generation.
+    max: 200  # Maximum value for this parameter during population generation.
+  mass_2:  # Mass of the secondary black hole in the binary system.
     estimate: true
     min: 50
     max: 150
-  a_1:
+  a_1:  # Spin magnitude of the primary black hole (dimensionless).
     estimate: false
     min: 0
     max: 0
-  a_2:
+  a_2:  # Spin magnitude of the secondary black hole (dimensionless).
     estimate: false
     min: 0
     max: 0
-  tilt_1:
+  tilt_1:  # Tilt angle of the primary spin with respect to the orbital angular momentum (radians).
     estimate: false
     min: 0
     max: 0
-  tilt_2:
+  tilt_2:  # Tilt angle of the secondary spin with respect to the orbital angular momentum (radians).
     estimate: false
     min: 0
     max: 0
-  phi_12:
+  phi_12:  # Azimuthal angle between the spins (radians).
     estimate: false
     min: 0
     max: 0
-  phi_jl:
+  phi_jl:  # Azimuthal angle between the total angular momentum and the orbital angular momentum (radians).
     estimate: false
     min: 0
     max: 0
-  luminosity_distance:
+  luminosity_distance:  # Luminosity distance to the source (in megaparsecs).
     estimate: false
     min: 1000
     max: 5000
-  theta_jn:
+  theta_jn:  # Inclination angle between the total angular momentum and the line of sight (radians).
     estimate: false
     min: 0
     max: 0
-  psi:
+  psi:  # Polarization angle (radians).
     estimate: false
     min: 0
     max: 0
-  phase:
+  phase:  # Phase at coalescence (radians).
     estimate: false
     min: 0
     max: 0
-  ra:
+  ra:  # Right ascension of the source (radians).
     estimate: false
     min: 0
     max: 0 
-  dec:
+  dec:  # Declination of the source (radians).
     estimate: false
     min: 0
     max: 0

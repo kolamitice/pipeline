@@ -1,0 +1,7 @@
+bilby
+numpy
+scipy
+matplotlib
+pandas
+pyyaml
+gwsurrogate
